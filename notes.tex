@@ -1,0 +1,57 @@
+\section{Basic notions}
+
+
+\section{Abelian categories}
+Loosely, an \defn{additive category} is one where morphisms can be added, and where we generally act like the category of abelian groups. 
+\begin{definition}
+An \defn{additive category} is a category $C$ such that 
+\begin{itemize}
+    \item $Hom(a,b)$ is an abelian group under $+$, where $\circ$ distributes over $+$:
+    $$f\circ (g+h)=(f+g)\circ (f+h)$$
+    $$(f+g)\circ h=(f\circ h)+(g\circ h)$$
+    \item $C$ has a \defn{zero object}\footnote{A \defn{zero object} is an initial and final object.} $0$.
+    \item $C$ has finite (co)products and these two coincide.\footnote{In fact, is enough to demand it has finite products - the rest will follow.}
+\end{itemize}
+\end{definition}
+The abelian group structure will be different for each pair $a,b\in C$. In the case of $Ab$, the group structure on $Hom(a,b)$ is given by the group structure on $b$, but $b$ needn't have a group structure in general. As an example, if $J$ and $A$ are categories with $J$ small and $A$ abelian, then $Fun(J,A)$ is an abelian (in particular additive) category.
+
+We want to extend this definition to encompass all categories of "abelian things". In particular, we want to be able to take kernels and cokernels of maps - this will allow us to do homological algebra. Notice that the (co)kernel has a universal property as respectively a pullback and a pushout.
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGsYAnACgDMAlCAC+pdJlz5CKAIzkqtRizYBBEWJAZseAkTkyF9Zq0QgAQuvHapRMgepHlp4pc0Sd05ACZ5DpSZA1UStJXRQAZl9FYzYLYLdrMORI+2inEABjCE5eQVctUM8fVMcAl2EFGCgAc3giUD4uCABbJDIQHAgkGXjGlu7qTqQfNIC+Vz7WxEiOrsQvXqap9qHpxf7EABZBuYBWPxjTcfWp-dmkADYTpG3zxAB2a4edy4rhIA
+\[\begin{tikzcd}
+ker(f) \pullback
+\arrow[r] \arrow[d] & A \arrow[d, "f"] & A \arrow[r, "f"] \arrow[d] & B \arrow[d] \\
+0 \arrow[r]                & B                & 0 \arrow[r]                & coker(f)   
+\end{tikzcd}\]
+
+\begin{definition}
+An \defn{abelian} category is an additive category with kernels and cokernels. In addition, we require that every monomorphism is the kernel of its cokernel and every epimorphism is the cokernel of its kernel.
+\end{definition}
+The additional requirement correspond to how we expect injective and surjective homomorphisms to act. If $f$ is injective, then $\pi:B\rightarrow B/im f$ has kernel $im(f)\iso A$. If $f$ is surjective, then $A/ker(f)\iso im(f)=B$. These are not an immediate property of the (co)kernels as (co)limits\footnote{Can I give an example?}. Kernels and cokernels allow us to define images as $im(f)=ker(coker(f))$. These have pleasing properties: $A\rightarrow B$ factors uniquely through $imf\rightarrow B$ and $A\rightarrow im(f)$ is an epimorphism.
+
+\textbf{Cool fact alert!}
+\begin{theorem}[Freyd-Mitchell Embedding Theorem]
+Every abelian category s.t. $Hom(X,Y)$ is a set embeds fully faithfully into $Mod_R$ for some (possibly non-commutative) ring $R$.
+\end{theorem}
+\begin{proof}
+\cite{Weibel}
+\end{proof}
+Which abelian categories correspond to non-commutative rings? Also, is $R$ unique?
+
+\begin{definition}
+A covariant functor $F:A\rightarrow B$ is right-exact if it preserves right-exact sequences. Similar for left-exact.
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAEEQBfU9TXfIRQBGclVqMWbdgHJuvEBmx4CRAExjq9Zq0QcZcnn2WCiAZk0SdbYvOMDVKMsPHapegGKcji-iqHIoi5akrogXoYKSg4BGsFW7uGykfb+5qTxbmG2XOIwUADm8ESgAGYAThAAtkhkIDgQSMI+FdVN1A1Iai2VNYga9Y2IZj1tiAAsHUMArKN901NIAGxzy4uIAOy5XEA
+\[\begin{tikzcd}
+A \arrow[r]  & A' \arrow[r]  & A'' \arrow[r]  & 0 \\
+FA \arrow[r] & FA' \arrow[r] & FA'' \arrow[r] & 0
+\end{tikzcd}\]
+A contravariant functor is left-exact if it takes right-exact sequences to left-exact sequences. Similar for right-exact.
+\end{definition}
+
+\begin{lemma}
+Limits commute with limits and right adjoints. In particular, in an abelian category,
+because kernels are limits, both right adjoints and limits are left-exact.
+
+Dually, colimits commute with colimits and left adjoints. In particular, because cokernels are
+colimits, both left adjoints and colimits are right-exact.
+\end{lemma}
