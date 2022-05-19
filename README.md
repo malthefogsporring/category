@@ -1,2 +1,2 @@
-# Regular Primes
-Notes on a dissertation on Kummer's Theory of Regular Primes.
+# Category Theory
+Notes on category theory. "Category Theory in Context" by Emily Riehl has been a major reference point.
