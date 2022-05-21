@@ -1,5 +1,70 @@
 \section{Basic notions}
+\begin{definition}
+A \defn{category} $C$ consists of a collection \footnote{These can be bigger than sets. I don't know the technical definition} $ob(C)$ of objects, and for every two objects $a,b\in ob(C)$ a collection $C(a,b)$ of maps satisfying the following:
+\begin{itemize}
+    \item If $f\in C(a,b)$ and $g\in C(b,c)$ then there exists $g\circ f\in C(a,c)$.
+    \item There is a unique identity map $id_C\in C(c,c)$ such that $f\circ id_c=id_c\circ f=f$ for every $f$.
+\end{itemize}
+If $ob(C)$ is a finite set then we say $C$ is \defn{small}. If $C(a,b)$ is a set for every $a,b\in ob(C)$ then we say $C$ is \defn{locally small}
+\end{definition}
 
+\begin{definition}
+A (covariant) \defn{functor} $F:C\rightarrow D$ between two categories is a mapping taking every $c\in ob(C)$ to an object $Fc\in D$ and every $f\in C(a,b)$ to a map $F(f)\in D(Fa,Fb)$ such that $F(g\circ f)=F(g)\circ F(f)$.
+
+A \defn{contravariant functor} $F$ is a functor $F:C^{op}\rightarrow D$ from the opposite category. In other words, $F$ reverses the direction of arrows in $C$.
+\end{definition}
+
+\begin{definition}
+A \defn{natural transformation} $\eta:F\rightarrow G$ between two functors $F,G:C\Rightarrow D$ is, for every $x\in C$ a mapping $\eta_x:Fx\rightarrow Gx$ (called the component at $x$) such that the following diagram commutes.
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADEAKADwEoQAvqXSZc+QigCM5KrUYs2AER78hI7HgJEyk2fWatEHTgE9VwkBg3ii03dX0Kjys4NkwoAc3hFQAMwAnCABbJDIQHAgkACYHeUNjP3N-INDEaQioxABmOIM2AHFOJMELQJCw6kikDMcEgB16mBw6AH1uUpSKxFjMpFy5fKNG5raTNwEgA
+\[\begin{tikzcd}
+F(x) \arrow[d, "F(f)"] \arrow[r, "\eta_x"] & D(x) \arrow[d, "G(f)"] \\
+F(y) \arrow[r, "\eta_y"]                   & D(y)                  
+\end{tikzcd}\]
+
+If each component $\eta_x$ is an isomorphism, then we sat $\eta$ is a \defn{natural isomorphism}.
+\end{definition}
+
+Lets give many examples.
+\begin{example}[Categories]
+The following are categories.
+\begin{itemize}
+    \item The category $\Set$ of sets and functions.
+    \item The category $\Cat$ of small categories and functors.
+    \item The category $\CAT$ of locally small categories and functors.
+    \item The category $\catname{Ab}$ of abelian groups and group homomorphisms.
+    \item The category $\catname{Grp}$ of groups and group homomorphisms.
+    \item The category $\catname{Ring}$ of rings and ring homomorphisms.
+    \item The category $\catname{R-Mod}$ of $R-$modules and module homomorphisms.
+    \item The category $\catname{Top}$ of topological spaces and continuous maps.
+    \item The category $\catname{Top^*}$ of pointed topological spaces and pointed maps.
+    \item The category $\catname{hTop}$ of pointed topological spaces and classes of homotopy equivalences.
+    \item For a category $C$, the opposite category $C^{op}$ where arrow directions are reversed.
+    \item For a category $C$ and an object $x$, the \defn{slice category} or \defn{over category} $C/x$ whose elements are maps into $x$ and maps commutative diagrams
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRDpAF9T1Nd9CKAIzkqtRizYAPLjxAZseAkTJCx9Zq0QgARlzEwoAc3hFQAMwBOEALZIyIHBCRDuF63cQAmak5duQK1t7X2dvag1JbXN9TiA
+\[\begin{tikzcd}
+a \arrow[r] \arrow[d, "f"] & x \\
+b \arrow[ru]               &  
+\end{tikzcd}\]
+    \item The similarly defined \defn{under category} $x/C$ of morphisms out of $x$ and maps that form commutative triangles.
+    \item The trivial category with a single object and a single identity map.
+    \item For every group $G$ the category $C_G$ with one object and one map for every $g\in G$ with composition defined by the group law.
+    \item A \defn{poset} $P$ is a category with a unique map $f:a\rightarrow b$ between any two objects, interpreted as a relation $a\leq b$.
+    \item A \defn{discrete category} is a category whose only maps are identity maps.
+    \item For any two categories $C,D$, there is a category $Fun(C,D)$ of functors between them and natural transformations.
+\end{itemize}
+\end{example}
+
+\begin{example}[Functors] The following are functors.
+\begin{itemize}
+    \item There is a large class of "forgetful" functors that forget extra structure. For example, the functors $U:\catname{Grp}\rightarrow \Set$, $U:\catname{Top}\rightarrow \Set$, $U:\catname{Ab}\rightarrow \catname{Grp}$, $U:\catname{Top^*}\rightarrow \catname{Top}$ which in each case forget the extra structure.
+    \item There are also a large class of "free" functors, for example $F:\Set\rightarrow \catname{Ab}$ mapping a set to the free abelian group on it, $\delta:\Set\rightarrow \catname{Top}$ giving a set the discrete topology, $\tau:\Set\rightarrow \catname{Top}$ giving a set the chaotic topology, and the abelianisation functor $F:\Grp\rightarrow \Ab$ sending a group to the free abelian group on it.
+\end{itemize}
+\end{example}
+
+\begin{definition}
+Two functors $F:C\rightarrow D$ and $G:D\rightarrow C$ are said to be an $\defn{equivalence of categories}$ if there exist natural isomorphisms $FG\iso id_C$ and $GF\iso id_D$.
+\end{definition}
 
 \section{Abelian categories}
 Loosely, an \defn{additive category} is one where morphisms can be added, and where we generally act like the category of abelian groups. 
